@@ -1,17 +1,21 @@
-$orange: #FF4A1F;
+$orange: #FE2700;
 $pink: #FE0253;
+$red: #FF1F42;
 $blue: #06C1FF;
+$green: #3BDE66;
 
 body {
 	padding: 0;
 	margin: 0;
-	background: #FFEDE1;
+	background: #FFFBFA;
   background-size: cover;
 	color: rgb(25,25,25);
 	text-align: center;
 	font-size: 30px;
-	font-family: 'Cabin', serif;
-	font-family: 'Proza Libre', serif;
+	font-family: 'Titillium Web', serif;
+	font-family: 'PT Sans', sans-serif;
+	font-family: 'Libre Franklin', sans-serif;
+
 	.errorsBox {
 		color: #E71A3A;
 	}
@@ -24,7 +28,7 @@ body {
 		width: 65vw;
 		margin: 35px auto 0 auto;
 		padding-bottom: 15px;
-		border-bottom: 3px solid $blue;
+		border-bottom: 3px solid $red;
 	}
 	h2 {
 		font-size: 32px;
@@ -46,7 +50,7 @@ body {
 		color: rgb(25,25,25);
 	}
 	a:hover {
-		color: $pink;
+		color: $red;
 	}
 	.credits {
 	  	width: 55vw;
@@ -73,10 +77,16 @@ body {
 	  }
 	  .navLink:hover {
 			color: rgba(250,250,250,0.85);
-			color: $pink;
+			color: $orange;
 	  }
 	  .activeRoute {
-	  	color: $blue !important;
+	  	color: $red !important;
+	  }
+	  #twitter-login {
+			width: 200px;
+	  }
+	  #twitter-login:hover {
+	  	color: white;
 	  }
 	}
 }
@@ -88,26 +98,6 @@ body {
 	h1 {
 		font-size: 45px;
 	}
-	input {
-		font-size: 28px;
-		margin: 10px;
-		width: 500px;
-		padding: 15px 10px;
-		border: 1px solid rgba(20,20,20,0.25);
-	}
-	button {
-		font-size: 32px;
-		padding: 10px 20px;
-		margin-bottom: 0;
-		border: 1px solid rgba(20,20,20,0.25);
-		background: white;
-		margin: 25px;
-		font-family: 'Proza Libre', serif;
-	}
-	button:hover {
-		cursor: pointer;
-		background: rgba(220,220,220,0.2);
-	}
 	.socialLogin {
 		margin: 15px auto;
 		display: flex;
@@ -117,6 +107,19 @@ body {
 			width: 225px;
 			margin: 5px;
 		}
+	}
+}
+
+.dashboardComponent {
+	input {
+		font-size: 24px;
+		width: 500px;
+		padding: 12px;
+		margin-right: 12px;
+	}
+	button {
+		padding: 6px 12px;
+		margin-left: 12px;
 	}
 }
 
@@ -201,17 +204,6 @@ body {
 		margin: auto;
 		h1 {
 			font-size: 40px;
-		}
-		input {
-			font-size: 24px;
-			margin: 8px;
-			width: 80vw;
-			padding: 12px 8px;
-		}
-		button {
-			font-size: 28px;
-			padding: 8px 16px;
-			margin: 18px;
 		}
 		.socialLogin {
 			margin: 15px auto;

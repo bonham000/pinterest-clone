@@ -15,16 +15,24 @@ class Navbar extends Component {
         <div className = "navigationWrapper">
           <div className = "linksWrapper">
 
-            <Link to = '/' className = 'navLink' activeClassName = 'activeRoute'>Home</Link>                             
+            { !isAuthenticated &&
+              <Link to = '/' className = 'navLink' activeClassName = 'activeRoute'>Home</Link> }
 
             { isAuthenticated &&
-              <Link to = '#' className = 'navLink' onClick = { () => dispatch(logoutUser()) }>Logout</Link> }
+              <Link to = '/dashboard' className = 'navLink' activeClassName = 'activeRoute'>Dashboard</Link> }
+
+            { isAuthenticated &&
+              <Link to = '/my-images' className = 'navLink' activeClassName = 'activeRoute'>My Images</Link> }
+
+            <Link to = '/view-all' className = 'navLink' activeClassName = 'activeRoute'>All Images</Link>              
 
             { !isAuthenticated &&
-              <Link to = 'login' className = 'navLink' activeClassName = 'activeRoute'>Login</Link> }
+              <a className = "btn btn-block btn-social btn-twitter navLink" id = "twitter-login" href = "/auth/twitter">
+                <span className = "fa fa-twitter"></span> Sign in with Twitter
+              </a> }
 
-            { !isAuthenticated &&
-              <Link to = 'signup' className = 'navLink' activeClassName = 'activeRoute'>Sign Up</Link> }
+            { isAuthenticated &&
+              <Link to = '#' className = 'navLink' onClick = { () => dispatch(logoutUser()) }>Logout</Link> }              
 
           </div>
         </div>

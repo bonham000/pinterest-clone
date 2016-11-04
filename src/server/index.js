@@ -6,21 +6,15 @@ import devConfig from './config/setup/dev'
 import prodConfig from './config/setup/prod'
 import { NODE_ENV, PORT } from './config/env'
 import bodyParser from 'body-parser'
-import dotenv from 'dotenv'
 import session from 'express-session'
 import cookieParser from 'cookie-parser'
 import passport from 'passport'
-
-dotenv.config();
-
-// need to add .env and then set mongo URL, twitter and github secret keys, and cookie parser secret
-// need to reset routes in actions/login for production
-
-const url = process.env.MONGO_HOST;
+import dotenv from 'dotenv'
+dotenv.config({silent: true});
 
 import mongoose from 'mongoose'
+const DB_URL = process.env.MONGO_HOST;
 
-import authRoutes from './routes/auth-routes'
 import apiRoutes from './routes/api-routes'
 import passportRoutes from './routes/passport'
 
@@ -33,7 +27,7 @@ if (NODE_ENV === 'development') { devConfig(app) } else { prodConfig(app) }
 
 // test connection to database
 mongoose.Promise = global.Promise
-mongoose.connect(url, () => { console.log('connected through mongoose') });
+mongoose.connect(DB_URL, () => { console.log('connected through mongoose') });
 
 app.use(express.static('dist/client'));
 
@@ -55,8 +49,8 @@ passport.serializeUser(function(user, done) { done(null, user) });
 passport.deserializeUser(function(user, done) { done(null, user) });
 
 // connect authentication and api routes
-app.use(authRoutes);
 app.use(passportRoutes);
+app.use(apiRoutes);
 
 app.use(fallback(path.join(__dirname, '../../dist/client/index.html')));
 
