@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { addImage } from '../actions/images'
+import { addImage, removeImage } from '../actions/images'
 
 @connect(
 	state => ({
@@ -10,14 +10,16 @@ import { addImage } from '../actions/images'
 		user: state.auth.user
 	}),
 	dispatch => ({
-		dispatchSubmission: bindActionCreators(addImage, dispatch)
+		dispatchSubmission: bindActionCreators(addImage, dispatch),
+		dispatchRemove: bindActionCreators(removeImage, dispatch)
 	})
 )
 class Dashboard extends React.Component {
 	static propTypes = {
 		images: React.PropTypes.array.isRequired,
 		user: React.PropTypes.string.isRequired,
-		dispatchSubmission: React.PropTypes.func.isRequired
+		dispatchSubmission: React.PropTypes.func.isRequired,
+		dispatchRemove: React.PropTypes.func.isRequired
 	}
 	constructor() {
 		super()
@@ -49,14 +51,21 @@ class Dashboard extends React.Component {
 
 		}
 
-	}	
+	}
+	removeImage(id) {
+		const data = {
+			token: localStorage.getItem('id_token'),
+			imageID: id
+		}
+		this.props.dispatchRemove(data);
+	}
 	render() {
 		const { images, user } = this.props;
 		const myImages = images.filter( (image) => {
 			return image.author === user
 		});
 		const renderImages = myImages.map( (image) => {
-			return <img src = {image.src} key = {image.id}/>
+			return <img src = {image.src} key = {image.id} onClick = {this.removeImage.bind(this, image.id)}/>
 		});
 		return (
 			<div className = 'dashboardComponent'>

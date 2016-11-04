@@ -23,11 +23,11 @@ function saveImages(images) {
 	}
 };
 
-function removeImage(data) {
+export function removeImage(data) {
 	return dispatch => {
 		axios.post('/remove-image', data).then( (response) => {
-			console.log(response.data);
-		}).catcher(err => alert(err));
+			dispatch(retrieveAllImages());
+		}).catch(err => alert(err));
 	}
 }
 

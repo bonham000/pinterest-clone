@@ -40,6 +40,22 @@ app.post('/api/add-image', (req, res) => {
 
 });
 
+app.post('/remove-image', (req, res) => {
+
+	const { imageID, token } = req.body;
+
+	jwt.verify(token, secret, (err, decode) => {
+		
+		if (err) { res.status(401).send('You are not logged in!') }
+		else { Image.remove({ id: imageID }, function (err) { 
+			if (err) throw err; });
+			res.status(201).send('Image removed!');
+		}
+
+	});
+
+});
+
 app.get('/retrieve-all-images', (req, res) => {
 	Image.find({}, (err, images) => {
 		if (images) {
