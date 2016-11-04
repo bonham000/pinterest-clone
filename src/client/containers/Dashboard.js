@@ -59,13 +59,14 @@ class Dashboard extends React.Component {
 		}
 		this.props.dispatchRemove(data);
 	}
+	handleImageSrcError(err) { err.target.src = 'https://s3.amazonaws.com/freecodecamp/camper-image-placeholder.png' }
 	render() {
 		const { images, user } = this.props;
 		const myImages = images.filter( (image) => {
 			return image.author === user
 		});
 		const renderImages = myImages.map( (image) => {
-			return <img src = {image.src} key = {image.id} onClick = {this.removeImage.bind(this, image.id)}/>
+			return <img src = {image.src} onError = {this.handleImageSrcError} key = {image.id} onClick = {this.removeImage.bind(this, image.id)}/>
 		});
 		return (
 			<div className = 'dashboardComponent'>

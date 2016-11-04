@@ -18,10 +18,16 @@ class AllImages extends React.Component {
 		loadImages: React.PropTypes.func.isRequired
 	}
 	componentWillMount() { this.props.loadImages() }
+	constructor(props) {
+		super(props);
+		this.state = {}
+		this.handleImageSrcError = this.handleImageSrcError.bind(this);
+	}
+	handleImageSrcError(err) { err.target.src = 'https://s3.amazonaws.com/freecodecamp/camper-image-placeholder.png' }
 	render() {
 		const { images } = this.props;
 		const renderImages = images.map( (image) => {
-			return <img src = {image.src} key = {image.id}/>
+			return <img onError = {this.handleImageSrcError} src = {image.src} key = {image.id}/>
 		});
 		return (
 			<div>
