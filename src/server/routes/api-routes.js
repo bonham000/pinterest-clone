@@ -39,3 +39,19 @@ app.post('/api/add-image', (req, res) => {
 	});
 
 });
+
+app.get('/retrieve-all-images', (req, res) => {
+	Image.find({}, (err, images) => {
+		if (images) {
+			res.status(201).send(images);
+		} else if (err) { throw err; }
+	});
+});
+
+
+
+
+
+
+
+
