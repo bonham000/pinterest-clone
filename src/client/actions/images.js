@@ -6,7 +6,7 @@ import { browserHistory } from 'react-router'
 export function addImage(data) {
 	return dispatch => {
 		axios.post('/api/add-image', data).then( (response) => {
-			console.log(response.data);
+			dispatch(retrieveAllImages());
 		}).catch((err) => {
 			alert(err.response.data);
 			browserHistory.push('/');
@@ -26,6 +26,7 @@ function saveImages(images) {
 function removeImage(data) {
 	return dispatch => {
 		axios.post('/remove-image', data).then( (response) => {
+			console.log(response.data);
 		}).catcher(err => alert(err));
 	}
 }

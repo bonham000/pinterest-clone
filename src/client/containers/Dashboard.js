@@ -5,13 +5,18 @@ import { bindActionCreators } from 'redux'
 import { addImage } from '../actions/images'
 
 @connect(
-	null,
+	state => ({
+		images: state.images,
+		user: state.auth.user
+	}),
 	dispatch => ({
 		dispatchSubmission: bindActionCreators(addImage, dispatch)
 	})
 )
 class Dashboard extends React.Component {
 	static propTypes = {
+		images: React.PropTypes.array.isRequired,
+		user: React.PropTypes.string.isRequired,
 		dispatchSubmission: React.PropTypes.func.isRequired
 	}
 	constructor() {
@@ -46,17 +51,24 @@ class Dashboard extends React.Component {
 
 	}	
 	render() {
+		const { images, user } = this.props;
+		const myImages = images.filter( (image) => {
+			return image.author === user
+		});
+		const renderImages = myImages.map( (image) => {
+			return <img src = {image.src} key = {image.id}/>
+		});
 		return (
 			<div className = 'dashboardComponent'>
-				<h1>
-					Dashboard Class
-				</h1>
+				<h1>Welcome {localStorage.getItem('user')}</h1>
 				<input
 					type = 'text'
 					placeholder = 'Enter a URL to an image' 
 					value = {this.state.input}
 					onChange = {this.handleChange} />
 				<button onClick = {this.submitImage}>Submit Image</button>
+				<h1>Your Images:</h1>
+				{renderImages}
 			</div>
 		);
 	}

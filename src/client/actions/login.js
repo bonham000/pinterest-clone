@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { browserHistory } from 'react-router'
 
-// There are three possible states for our login process and we need actions for each of them
+import { retrieveAllImages } from './images'
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
@@ -14,6 +14,7 @@ function receiveLogin(user) {
     type: LOGIN_SUCCESS,
     isFetching: false,
     isAuthenticated: true,
+    user: user.user,
     id_token: user.id_token
   }
 }
@@ -39,7 +40,8 @@ export function checkAuth() {
           localStorage.setItem('id_token', user.id_token)
 
           // Dispatch the success action
-          dispatch(receiveLogin(user))
+          dispatch(receiveLogin(user));
+          dispatch(retrieveAllImages());
 
           browserHistory.push('/dashboard');
         }

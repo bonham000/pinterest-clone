@@ -6,6 +6,7 @@ import { LOGOUT_SUCCESS } from '../actions/logout'
 const defaultState = {
   loginError: '',
   registrationError: '',
+  user: '',
   isFetching: false,
   isAuthenticated: localStorage.getItem('id_token') ? true : false
 }
@@ -18,6 +19,7 @@ const auth = (state = defaultState, action) => {
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: true,
+        user: action.user,
         loginError: '',
         registrationError: ''
       });

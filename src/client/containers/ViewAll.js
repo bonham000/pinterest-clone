@@ -25,9 +25,7 @@ class AllImages extends React.Component {
 		});
 		return (
 			<div>
-				<h1>
-					All Images Class
-				</h1>
+				<h1>Displaying Images from All Useres</h1>
 				{renderImages}
 			</div>
 		);
