@@ -17,24 +17,75 @@ class AllImages extends React.Component {
 		images: React.PropTypes.array.isRequired,
 		loadImages: React.PropTypes.func.isRequired
 	}
-	componentWillMount() { this.props.loadImages() }
+	componentWillMount() {
+		const { images } = this.props;
+		this.setState({
+			images: images,
+			displayImages: images
+		});
+	}
 	constructor(props) {
 		super(props);
-		this.state = {}
+		this.state = {
+			images: [],
+			displayImages: [],
+			usersList: []
+		}
 		this.handleImageSrcError = this.handleImageSrcError.bind(this);
+		this.handleSelect = this.handleSelect.bind(this);
 	}
 	handleImageSrcError(err) { err.target.src = 'https://s3.amazonaws.com/freecodecamp/camper-image-placeholder.png' }
+	handleSelect(event) {
+		// sort images in state based on user selection
+		const selection = event.target.value;
+		const { images } = this.state;
+		if (selection === 'Display All Images') {
+			this.setState({
+				displayImages: images
+			});
+		} else if (selection !== 'Select a User') {
+			const filterImages = images.filter( (image) => {
+				return image.author === selection;
+			});
+			this.setState({
+				displayImages: filterImages
+			});
+		}
+	}
 	render() {
-		const { images } = this.props;
+		const images = this.state.displayImages;
 		const renderImages = images.map( (image) => {
 			return <img onError = {this.handleImageSrcError} src = {image.src} key = {image.id}/>
 		});
 		return (
 			<div>
-				<h1>Displaying Images from All Useres</h1>
+				<div>
+					<h1>Displaying Images from All Useres</h1>
+					<h2>Select a user to see just their images</h2>
+					<select onChange = {this.handleSelect}>
+						{this.state.usersList.map( (user, idx) => { return <option key = {idx} value = {user}>{user}</option>})}
+					</select>
+				</div>
 				{renderImages}
 			</div>
 		);
+	}
+	componentDidMount() {
+		const { images } = this.state;
+		// users object holds keys for each user and their images which is
+		// stored in local state when the component is first mounted
+		let users = {};
+		let usersList = ['Select a User', 'Display All Images'];
+		function createUsersList(array) {
+			return array.filter( (item) => {
+				return users.hasOwnProperty(item.author) ? users[item.author].push(item) : users[item.author] = [item];
+			});
+		};
+		createUsersList(images);
+		for (let user in users) { usersList.push(user); }
+		this.setState({
+			usersList: usersList
+		});
 	}
 };
 
