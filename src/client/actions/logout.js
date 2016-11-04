@@ -1,20 +1,10 @@
 import { browserHistory } from 'react-router'
 
-export const LOGOUT_REQUEST = 'LOGOUT_REQUEST'
-export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
-export const LOGOUT_FAILURE = 'LOGOUT_FAILURE'
+export const LOGOUT_USER = 'LOGOUT_USER'
 
-function requestLogout() {
+function fulfillLogout() {
   return {
-    type: LOGOUT_REQUEST,
-    isFetching: true,
-    isAuthenticated: true
-  }
-}
-
-function receiveLogout() {
-  return {
-    type: LOGOUT_SUCCESS,
+    type: LOGOUT_USER,
     isFetching: false,
     isAuthenticated: false,
     user: ''
@@ -24,10 +14,8 @@ function receiveLogout() {
 // Logs the user out
 export function logoutUser() {
   return dispatch => {
-    dispatch(requestLogout())
-    localStorage.removeItem('id_token')
-    localStorage.removeItem('user')
-    dispatch(receiveLogout())
-    browserHistory.push('/logout')
+    dispatch(fulfillLogout());
+    browserHistory.push('/logout');
+    browserHistory.push('/');
   }
 }

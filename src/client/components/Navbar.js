@@ -5,9 +5,7 @@ import { logoutUser } from '../actions/logout'
 
 class Navbar extends Component {
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
-    errorMessage: PropTypes.string
   }
   render() {
     const { dispatch, isAuthenticated, errorMessage } = this.props
@@ -29,7 +27,7 @@ class Navbar extends Component {
               </a> }
 
             { isAuthenticated &&
-              <Link to = '#' className = 'navLink' onClick = { () => dispatch(logoutUser()) }>Logout</Link> }              
+              <Link to = '#' className = 'navLink' onClick = {this.props.logoutUser}>Logout</Link> }              
 
           </div>
         </div>

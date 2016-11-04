@@ -5,39 +5,51 @@ import { bindActionCreators } from 'redux'
 
 import Navbar from '../components/Navbar'
 
+import { retrieveAllImages } from '../actions/images'
+import { logoutUser } from '../actions/logout'
+
+@connect(
+  state => ({
+    isAuthenticated: state.auth.isAuthenticated
+  }),
+  dispatch => ({
+    loadImages: bindActionCreators(retrieveAllImages, dispatch),
+    logoutUser: bindActionCreators(logoutUser, dispatch)
+  })
+)
 class App extends Component {
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
-    errorMessage: PropTypes.string
+    loadImages: PropTypes.func.isRequired,
+    logoutUser: PropTypes.func.isRequired
   }
+  componentWillMount() { this.props.loadImages() }
   render() {
-    const { dispatch, isAuthenticated, errorMessage } = this.props
+    const { isAuthenticated, logoutUser } = this.props;
     return (
       <div>
-        <Navbar
 
-          isAuthenticated = {isAuthenticated}
-          errorMessage = {errorMessage}
-          dispatch = {dispatch} />
+        <Navbar isAuthenticated = {isAuthenticated} logoutUser = {logoutUser} />
 
         {this.props.children}
 
       </div>
-    )
+    );
   }
-}
+};
 
-//These props come from the application's state when it is started
-function mapStateToProps(state) {
+export default App;
 
-  const isAuthenticated = state.auth.isAuthenticated;
-  const errorMessage = state.auth.errorMessage;
+// //These props come from the application's state when it is started
+// function mapStateToProps(state) {
 
-  return {
-    isAuthenticated,
-    errorMessage
-  }
-}
+//   const isAuthenticated = state.auth.isAuthenticated;
+//   const errorMessage = state.auth.errorMessage;
 
-export default connect(mapStateToProps)(App)
+//   return {
+//     isAuthenticated,
+//     errorMessage
+//   }
+// }
+
+// export default connect(mapStateToProps)(App)

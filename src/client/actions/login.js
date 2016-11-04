@@ -35,19 +35,15 @@ export function checkAuth() {
 
           const user = res.data;
 
-          // If login was successful, set the token in local storage
-          localStorage.setItem('user', user.user)
-          localStorage.setItem('id_token', user.id_token)
-
-          // Dispatch the success action
+          // Dispatch the success action with user data from server
           dispatch(receiveLogin(user));
-          dispatch(retrieveAllImages());
 
           browserHistory.push('/dashboard');
         }
     }).catch(err => { 
       console.log('You are not authenticated', err.response.data);
       dispatch(loginError(err.response.data));
+      browserHistory.push('/login');
     });
   }
 }

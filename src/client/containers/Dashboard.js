@@ -3,23 +3,30 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { addImage, removeImage } from '../actions/images'
+import { logoutUser } from '../actions/logout'
 
 @connect(
 	state => ({
 		images: state.images,
-		user: state.auth.user
+		user: state.auth.user,
+		token: state.auth.id_token
 	}),
 	dispatch => ({
 		dispatchSubmission: bindActionCreators(addImage, dispatch),
-		dispatchRemove: bindActionCreators(removeImage, dispatch)
+		dispatchRemove: bindActionCreators(removeImage, dispatch),
+		logoutUser: bindActionCreators(logoutUser, dispatch)
 	})
 )
 class Dashboard extends React.Component {
 	static propTypes = {
 		images: React.PropTypes.array.isRequired,
 		user: React.PropTypes.string.isRequired,
+		token: React.PropTypes.string.isRequired,
 		dispatchSubmission: React.PropTypes.func.isRequired,
 		dispatchRemove: React.PropTypes.func.isRequired
+	}
+	componentWillMount() {
+		if (!this.props.token) { this.props.logoutUser() }
 	}
 	constructor() {
 		super()
@@ -40,8 +47,8 @@ class Dashboard extends React.Component {
 		if (image !== '') {
 			const data = {
 				img: image,
-				user: localStorage.getItem('user'),
-				token: localStorage.getItem('id_token')
+				user: this.props.user,
+				token: this.props.token
 			}
 			this.props.dispatchSubmission(data);
 			
@@ -54,7 +61,7 @@ class Dashboard extends React.Component {
 	}
 	removeImage(id) {
 		const data = {
-			token: localStorage.getItem('id_token'),
+			token: this.props.token,
 			imageID: id
 		}
 		this.props.dispatchRemove(data);

@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux'
 
 import { LOGIN_SUCCESS, LOGIN_FAILURE } from '../actions/login'
-import { LOGOUT_SUCCESS } from '../actions/logout'
+import { LOGOUT_USER } from '../actions/logout'
 
 const defaultState = {
   loginError: '',
   registrationError: '',
   user: '',
   isFetching: false,
-  isAuthenticated: localStorage.getItem('id_token') ? true : false
+  isAuthenticated: false
 }
 
 const auth = (state = defaultState, action) => {
@@ -20,8 +20,8 @@ const auth = (state = defaultState, action) => {
         isFetching: false,
         isAuthenticated: true,
         user: action.user,
+        id_token: action.id_token,
         loginError: '',
-        registrationError: ''
       });
   
     case LOGIN_FAILURE:
@@ -31,10 +31,12 @@ const auth = (state = defaultState, action) => {
         loginError: action.error
       });
    
-    case LOGOUT_SUCCESS:
+    case LOGOUT_USER:
       return Object.assign({}, state, {
         isFetching: true,
-        isAuthenticated: false
+        isAuthenticated: false,
+        user: '',
+        id_token: ''
       });
  
     default:
