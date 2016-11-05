@@ -38,6 +38,8 @@ export function checkAuth() {
           // Dispatch the success action with user data from server
           dispatch(receiveLogin(user));
 
+          dispatch(retrieveAllImages());
+
           browserHistory.push('/dashboard');
         }
     }).catch(err => { 

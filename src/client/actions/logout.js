@@ -1,5 +1,7 @@
 import { browserHistory } from 'react-router'
 
+import axios from 'axios'
+
 export const LOGOUT_USER = 'LOGOUT_USER'
 
 function fulfillLogout() {
@@ -15,7 +17,5 @@ function fulfillLogout() {
 export function logoutUser() {
   return dispatch => {
     dispatch(fulfillLogout());
-    browserHistory.push('/logout');
-    browserHistory.push('/');
   }
 }

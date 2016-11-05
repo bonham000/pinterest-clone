@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import Gallery from 'react-grid-gallery';
 import uuid from 'uuid-v4'
 
 import { retrieveAllImages, addImage, removeImage } from '../actions/images'
@@ -29,20 +30,29 @@ class Dashboard extends React.Component {
 		dispatchRemove: React.PropTypes.func.isRequired
 	}
 	componentWillMount() {
-		if (!this.props.token) { this.props.logoutUser() }
+		
+		if (!this.props.token) {
+			this.props.logoutUser()
+		}
+
 		this.props.loadImages();
+
 	}
 	constructor() {
 		super()
 		this.state = {
-			input: ''
+			input: '',
+			userImages: [],
+			loadError: ''
 		}
 		this.handleChange = this.handleChange.bind(this);
 		this.submitImage = this.submitImage.bind(this);
+		this.removeImage = this.removeImage.bind(this);
 	}
 	handleChange(e) {
 		this.setState({
-			input: e.target.value
+			input: e.target.value,
+			loadError: ''
 		});
 	}
 	submitImage() {
@@ -52,10 +62,10 @@ class Dashboard extends React.Component {
 
 			this.setState({ input: '' });
 
-			function getImageData(source, user, token, callback) {
+			function getImageData(source, user, token, callback, errorCallback) {
 				let newImg = new Image();
 
-				newImg.onload = function() {
+				newImg.onload = () => {
 		    	const imageData = {
 			       id: uuid(),
 			       author: user,
@@ -64,7 +74,7 @@ class Dashboard extends React.Component {
 			       thumbnailWidth: newImg.width / 75,
 			       thumbnailHeight: newImg.height / 75,
 			       thumbnail: source,
-			       url: source
+			       src: source
 		     	};
 
 					const data = {
@@ -76,25 +86,39 @@ class Dashboard extends React.Component {
 					callback(data)
 
 				}
-				newImg.onerror = () => {
-					console.log('error loading image');
+				newImg.onerror = function() {
+					errorCallback('There was an error loading this image, please try again.');
 				}
 
 				newImg.src = source;
 
 			}
 
-			getImageData(image, this.props.user, this.props.token, this.props.dispatchSubmission);
+			const setError = (err) => {
+				this.setState({
+					loadError: err
+				});
+			}
+
+			getImageData(image, this.props.user, this.props.token, this.props.dispatchSubmission, setError);
 
 		}
 
 	}
-	removeImage(id, idx) {
+	removeImage(idx) {
+
+		const { images, user } = this.props;
+		const myImages = images.filter( (image) => {
+			return image.author === user
+		});
+
+		const imageID = myImages[idx].id;
+
 		const data = {
 			token: this.props.token,
-			imageID: id,
-			idx
+			imageID,
 		}
+
 		this.props.dispatchRemove(data);
 	}
 	handleImageSrcError(err) { err.target.src = 'https://s3.amazonaws.com/freecodecamp/camper-image-placeholder.png' }
@@ -102,9 +126,6 @@ class Dashboard extends React.Component {
 		const { images, user } = this.props;
 		const myImages = images.filter( (image) => {
 			return image.author === user
-		});
-		const renderImages = myImages.map( (image, idx) => {
-			return <img src = {image.src} onError = {this.handleImageSrcError} key = {image.id} onClick = {this.removeImage.bind(this, image.id, idx)}/>
 		});
 		return (
 			<div className = 'dashboardComponent'>
@@ -115,8 +136,9 @@ class Dashboard extends React.Component {
 					value = {this.state.input}
 					onChange = {this.handleChange} />
 				<button onClick = {this.submitImage}>Submit Image</button>
-				<h1>Your Images (click to remove)</h1>
-				{renderImages}
+				{ this.state.loadError !== '' && <p>{this.state.loadError}</p> }
+				{ myImages.length > 0 && <h2>Your Images (click to remove)</h2> }
+				<Gallery rowHeight = {200} images = {myImages} onClickThumbnail = {this.removeImage.bind(this)} />
 			</div>
 		);
 	}

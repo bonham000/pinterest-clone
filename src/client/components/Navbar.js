@@ -27,7 +27,7 @@ class Navbar extends Component {
               </a> }
 
             { isAuthenticated &&
-              <Link to = '#' className = 'navLink' onClick = {this.props.logoutUser}>Logout</Link> }              
+              <Link to = '/logout-success' className = 'navLink' onClick = {this.props.logoutUser}>Logout</Link> }              
 
           </div>
         </div>

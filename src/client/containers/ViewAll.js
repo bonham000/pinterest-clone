@@ -24,7 +24,7 @@ class AllImages extends React.Component {
 		const { images } = this.props;
 
 		let users = {};
-		let usersList = ['Select a User', 'Display All Images'];
+		let usersList = ['Select a User to Filter Images', 'Display All Images'];
 		function createUsersList(array) {
 			return array.filter( (item) => {
 				return users.hasOwnProperty(item.author) ? users[item.author].push(item) : users[item.author] = [item];
@@ -73,14 +73,15 @@ class AllImages extends React.Component {
 		return (
 			<div className = 'viewAllContainer'>
 				<div>
-					<h1>Displaying Images from All Useres</h1>
-					<h2>Select a user to see just their images</h2>
+					<h1>Displaying Images from All Users</h1>
 					<select onChange = {this.handleSelect}>
 						{this.state.usersList.map( (user, idx) => { return <option key = {idx} value = {user}>{user}</option>})}
 					</select>
 				</div>
 
-				<Gallery images = {images} />
+				<div className = 'galleryWrapper'>
+					<Gallery rowHeight = {200} images = {images} />
+				</div>
 
 			</div>
 		);
