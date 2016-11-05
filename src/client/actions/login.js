@@ -30,7 +30,7 @@ function loginError(error) {
 
 export function checkAuth() {
   return dispatch => {
-    return axios.post(`${HOST}/verify`).then ( (res) => {
+    return axios.get(`${HOST}/verify`).then ( (res) => {
       if (res.status === 201) {
 
           const user = res.data;
