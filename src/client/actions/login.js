@@ -7,7 +7,7 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 
 import { DEV_HOST, PROD_HOST } from '../constants/host'
-const HOST = DEV_HOST;
+const HOST = PROD_HOST;
 
 function receiveLogin(user) {
   return {

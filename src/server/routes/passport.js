@@ -61,9 +61,3 @@ app.post('/verify', function(req, res){
   // if session is not authenticated redirect to login
   } else { res.redirect('/login') }
  });
-
-// handle logout in passport
-app.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/logout-success');
-});
