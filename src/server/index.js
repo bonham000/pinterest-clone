@@ -32,19 +32,14 @@ mongoose.connect(DB_URL, () => { console.log('connected through mongoose') });
 
 app.use(express.static('dist/client'));
 
-
-
 app.use(function (req, res, next) {
-
   res.header("Access-Control-Allow-Origin", "http://hidden-woodland-32853.herokuapp.com");
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
   next();;
-
 });
 
-app.use(express.cookieParser());
-//app.use(cookieParser(secretString));
+app.use(cookieParser(secretString));
 app.use(session({
   secret: secretString,
   resave: true,
