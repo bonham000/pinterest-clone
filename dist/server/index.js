@@ -67,6 +67,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _dotenv2.default.config({ silent: true });
 
 var DB_URL = process.env.MONGO_HOST;
+var secretString = process.env.SECRET_STRING;
 
 var app = (0, _express2.default)();
 
@@ -87,8 +88,6 @@ _mongoose2.default.connect(DB_URL, function () {
 
 app.use(_express2.default.static('dist/client'));
 
-var secretString = process.env.SECRET_STRING;
-
 app.use(function (req, res, next) {
 
   res.header("Access-Control-Allow-Origin", "http://hidden-woodland-32853.herokuapp.com");
@@ -97,13 +96,17 @@ app.use(function (req, res, next) {
   next();;
 });
 
-app.use((0, _cookieParser2.default)(secretString));
+app.use(_express2.default.cookieParser());
+//app.use(cookieParser(secretString));
 app.use((0, _expressSession2.default)({
-  secret: 'super secret key',
+  secret: secretString,
   resave: true,
   secure: false,
   saveUninitialized: true
 }));
+app.use(_passport2.default.initialize());
+app.use(_passport2.default.session());
+app.use(app.router);
 
 // setup passport
 app.use(_passport2.default.initialize());

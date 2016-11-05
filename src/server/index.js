@@ -14,6 +14,7 @@ dotenv.config({silent: true});
 
 import mongoose from 'mongoose'
 const DB_URL = process.env.MONGO_HOST;
+const secretString = process.env.SECRET_STRING;
 
 import apiRoutes from './routes/api-routes'
 import passportRoutes from './routes/passport'
@@ -31,7 +32,7 @@ mongoose.connect(DB_URL, () => { console.log('connected through mongoose') });
 
 app.use(express.static('dist/client'));
 
-const secretString = process.env.SECRET_STRING;
+
 
 app.use(function (req, res, next) {
 
@@ -42,13 +43,18 @@ app.use(function (req, res, next) {
 
 });
 
-app.use(cookieParser(secretString));
+app.use(express.cookieParser());
+//app.use(cookieParser(secretString));
 app.use(session({
-  secret: 'super secret key',
+  secret: secretString,
   resave: true,
   secure: false,
   saveUninitialized: true
 }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(app.router);
+
 
 // setup passport
 app.use(passport.initialize());
