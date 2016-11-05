@@ -21,7 +21,6 @@ app.post('/api/add-image', (req, res) => {
 			let image = new Image({
 				id: img.id,
 				src: img.src,
-				url: img.src,
 				thumbnail: img.thumbnail,
 				author: img.author,
 				width: img.width,

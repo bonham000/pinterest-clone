@@ -39,17 +39,3 @@ class App extends Component {
 };
 
 export default App;
-
-// //These props come from the application's state when it is started
-// function mapStateToProps(state) {
-
-//   const isAuthenticated = state.auth.isAuthenticated;
-//   const errorMessage = state.auth.errorMessage;
-
-//   return {
-//     isAuthenticated,
-//     errorMessage
-//   }
-// }
-
-// export default connect(mapStateToProps)(App)

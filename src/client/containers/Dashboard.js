@@ -52,7 +52,7 @@ class Dashboard extends React.Component {
 
 			this.setState({ input: '' });
 
-			function getImageData(source, user, token, cb) {
+			function getImageData(source, user, token, callback) {
 				let newImg = new Image();
 
 				newImg.onload = function() {
@@ -64,7 +64,6 @@ class Dashboard extends React.Component {
 			       thumbnailWidth: newImg.width / 75,
 			       thumbnailHeight: newImg.height / 75,
 			       thumbnail: source,
-			       src: source,
 			       url: source
 		     	};
 
@@ -73,12 +72,12 @@ class Dashboard extends React.Component {
 						user: user,
 						token: token
 					}
-					console.log(data)
-					cb(data)
+
+					callback(data)
 
 				}
 				newImg.onerror = () => {
-					console.log('error');
+					console.log('error loading image');
 				}
 
 				newImg.src = source;

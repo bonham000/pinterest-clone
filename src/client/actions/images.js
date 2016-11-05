@@ -24,18 +24,14 @@ function saveImages(images) {
 	}
 };
 
-function removeImageLocal(idx) {
-	return {
-		type: REMOVE_IMAGE,
-		idx
-	}
-}
-
 export function removeImage(data) {
 	return dispatch => {
 		axios.post('/remove-image', data).then( (response) => {
 			dispatch(retrieveAllImages());
-		}).catch(err => alert(err));
+		}).catch((err) => {
+			alert(err.response.data);
+			browserHistory.push('/');
+		});
 	}
 }
 

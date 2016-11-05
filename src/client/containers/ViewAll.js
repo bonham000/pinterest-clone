@@ -1,9 +1,6 @@
 import React from 'react'
 import Gallery from 'react-grid-gallery';
 
-import ImageLayout from 'react-image-layout';
-
-
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -88,25 +85,7 @@ class AllImages extends React.Component {
 			</div>
 		);
 	}
-	componentWillUnmount() {
-		console.log('unmounting');
-		this.setState({
-			images: [],
-			displayImages: [],
-			usersList: []
-		});
-	}
 };
 
 export default AllImages;
-
-
-
-
-
-
-
-
-
-
 
