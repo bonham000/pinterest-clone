@@ -46,10 +46,6 @@ app.use(session({
   secure: false,
   saveUninitialized: true
 }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(app.router);
-
 
 // setup passport
 app.use(passport.initialize());

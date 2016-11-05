@@ -102,9 +102,6 @@ app.use((0, _expressSession2.default)({
   secure: false,
   saveUninitialized: true
 }));
-app.use(_passport2.default.initialize());
-app.use(_passport2.default.session());
-app.use(app.router);
 
 // setup passport
 app.use(_passport2.default.initialize());
