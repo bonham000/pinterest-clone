@@ -74,6 +74,11 @@ app.get('/auth/twitter/callback/', _passport2.default.authenticate('twitter', { 
 
 // client verifies auth flow from passport redirect are receives jwt token in response or redirects to login page otherwise
 app.post('/verify', function (req, res) {
+
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+
   // if user is authenticated send them a jwt token
   if (req.isAuthenticated()) {
     res.status(201).send({
