@@ -129,14 +129,14 @@ class Dashboard extends React.Component {
 		});
 		return (
 			<div className = 'dashboardComponent'>
-				<h1>Welcome {localStorage.getItem('user')}</h1>
+				<h1>Welcome {this.props.user}</h1>
 				<input
 					type = 'text'
 					placeholder = 'Enter a URL to an image' 
 					value = {this.state.input}
 					onChange = {this.handleChange} />
 				<button onClick = {this.submitImage}>Submit Image</button>
-				{ this.state.loadError !== '' && <p>{this.state.loadError}</p> }
+				{ this.state.loadError !== '' && <p className = 'error'>{this.state.loadError}</p> }
 				{ myImages.length > 0 && <h2>Your Images (click to remove)</h2> }
 				<Gallery rowHeight = {200} images = {myImages} onClickThumbnail = {this.removeImage.bind(this)} />
 			</div>

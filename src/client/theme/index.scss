@@ -29,10 +29,6 @@ body {
 		width: 500px;
 		font-size: 28px;
 	}
-	.galleryWrapper {
-		width: 95vw;
-		margin: auto;
-	}
 }
 
 .aboutWrapper {
@@ -147,6 +143,17 @@ body {
 			height: auto;
 		}
 	}
+	.error {
+		font-size: 22px;
+		margin-top: 25px;
+		color: $pink;
+	}
+}
+
+.logout {
+	h1 {
+		margin-top: 25px;
+	}
 }
 
 @media only screen and (max-width: 900px) {
@@ -170,6 +177,51 @@ body {
 		}
 		.credits {
 			width: 75vw;
+		}
+	}
+}
+
+@media only screen and (max-width: 750px) {
+	.dashboardComponent {
+		h1 {
+			width: 95vw;
+			margin: 25px auto 5px auto;
+			font-size: 24px;
+		}
+		input {
+			width: 90vw;
+			font-size: 22px;
+		}
+		button {
+			margin: 25px auto 5px auto;
+		}
+		h2 {
+			font-size: 18px;
+			margin: 15px auto;
+		}
+		.error {
+			font-size: 16px;
+			margin: 5px;
+		}
+	}
+	.viewAllContainer {
+		h1 {
+			width: 95vw;
+			margin: 25px auto 15px auto;
+			font-size: 24px;
+		}
+		select {
+			width: 75vw;
+			font-size: 22px;
+			margin: 5px auto 25px auto;
+		}
+		option {
+			font-size: 18px;
+		}
+	}
+	.logout {
+		h1 {
+			font-size: 22px;
 		}
 	}
 }
@@ -203,8 +255,10 @@ body {
 	.aboutWrapper {
 		h1 {
 			width: 85vw;
-			font-size: 28px;
-			margin-top: 15px;
+			font-size: 24px;
+			margin-top: 25px;
+			padding-bottom: 15px;
+			margin-bottom: 25px;
 		}
 		h2 {
 			font-size: 22px;

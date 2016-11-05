@@ -14,8 +14,8 @@ class Logout extends React.Component {
 	componentWillMount() { this.props.logoutUser() }
 	render() {
 		return (
-			<div>
-				<h1>You have been logged out.</h1>
+			<div className = 'logout'>
+				<h1>You have been logged out</h1>
 			</div>
 		);
 	}

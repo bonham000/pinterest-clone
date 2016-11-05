@@ -24,7 +24,7 @@ class AllImages extends React.Component {
 		const { images } = this.props;
 
 		let users = {};
-		let usersList = ['Select a User to Filter Images', 'Display All Images'];
+		let usersList = ['Filter Images by User'];
 		function createUsersList(array) {
 			return array.filter( (item) => {
 				return users.hasOwnProperty(item.author) ? users[item.author].push(item) : users[item.author] = [item];
@@ -33,6 +33,8 @@ class AllImages extends React.Component {
 
 		createUsersList(images);
 		for (let user in users) { usersList.push(user); }
+
+		usersList.push('Display All Images');
 
 		this.setState({
 			usersList: usersList,
