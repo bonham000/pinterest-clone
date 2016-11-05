@@ -33,6 +33,15 @@ app.use(express.static('dist/client'));
 
 const secretString = process.env.SECRET_STRING;
 
+app.use(function (req, res, next) {
+
+  res.header("Access-Control-Allow-Origin", "http://hidden-woodland-32853.herokuapp.com");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
+  next();;
+
+});
+
 app.use(cookieParser(secretString));
 app.use(session({
   secret: 'super secret key',
