@@ -30,7 +30,7 @@ function loginError(error) {
 
 export function checkAuth() {
   return dispatch => {
-    return axios.get(`${HOST}/verify`).then ( (res) => {
+    return axios.post(`${HOST}/verify`).then ( (res) => {
 
         const user = res.data;
 
