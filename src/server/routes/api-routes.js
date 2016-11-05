@@ -25,7 +25,6 @@ app.post('/api/add-image', (req, res) => {
 			});
 			image.save( (err, image) => {
 				if (err) throw err;
-				console.log('Saved:', image);
 			});
 			res.status(201).send('Image added!')
 		}

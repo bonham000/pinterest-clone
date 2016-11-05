@@ -1,4 +1,11 @@
 import React from 'react'
+import Gallery from 'react-grid-gallery';
+
+
+
+import ImageLayout from 'react-image-layout';
+import ImageGrid from 'react-image-grid'
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -18,10 +25,34 @@ class AllImages extends React.Component {
 		loadImages: React.PropTypes.func.isRequired
 	}
 	componentWillMount() {
-		const { images } = this.props;
+
+		let grid = [];
+
+			async function setImageData(img) {
+		    let newImg = new Image();
+
+		    newImg.onload = await function() {
+		    	const gridImage = {
+			       width: newImg.width / 75,
+			       height: newImg.height / 75,
+			       thumbnailWidth: newImg.width / 75,
+			       thumbnailHeight: newImg.height / 75,
+			       thumbnail: img.src,
+			       src: img.src,
+			       id: img.id
+		     	};
+		      grid.push(gridImage);
+		    }
+		    newImg.src = img.src;
+		}
+
+		let { images } = this.props;
+
+		for (let i = 0; i < images.length; i++) { setImageData(images[i]) }
+		
 		this.setState({
-			images: images,
-			displayImages: images
+			images: grid,
+			displayImages: grid,
 		});
 	}
 	constructor(props) {
@@ -54,9 +85,9 @@ class AllImages extends React.Component {
 	}
 	render() {
 		const images = this.state.displayImages;
-		const renderImages = images.map( (image) => {
-			return <img onError = {this.handleImageSrcError} src = {image.src} key = {image.id}/>
-		});
+		// const renderImages = images.map( (image, idx) => {
+		// 	return <img id = {image.id} src = {image.src} onError = {this.handleImageSrcError} />
+		// });
 		return (
 			<div>
 				<div>
@@ -66,7 +97,9 @@ class AllImages extends React.Component {
 						{this.state.usersList.map( (user, idx) => { return <option key = {idx} value = {user}>{user}</option>})}
 					</select>
 				</div>
-				{renderImages}
+
+				<Gallery images = {images}></Gallery>
+
 			</div>
 		);
 	}
@@ -90,3 +123,16 @@ class AllImages extends React.Component {
 };
 
 export default AllImages;
+
+
+
+
+
+
+
+
+
+
+
+
+
