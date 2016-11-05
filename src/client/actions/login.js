@@ -34,6 +34,9 @@ export function checkAuth() {
 
         const user = res.data;
 
+        console.log(res)
+        console.log(res.data)
+
         // Dispatch the success action with user data from server
         dispatch(receiveLogin(user));
 

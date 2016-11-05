@@ -55,7 +55,7 @@ app.get('/verify', function(req, res){
 
   // if user is authenticated send them a jwt token
   if (req.isAuthenticated()) {
-     res.status(201).send({
+     res.send({
       id_token: createToken(req.user.username),
       user: req.user.username
   });
