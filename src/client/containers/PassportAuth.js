@@ -4,9 +4,6 @@ import { bindActionCreators } from 'redux'
 
 import { checkAuth } from '../actions/login'
 
-// this component dispatches an action to verify passport
-// 3rd party authentication after redirect from the server
-
 @connect(
 	null,
 	dispatch => ({

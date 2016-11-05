@@ -31,17 +31,16 @@ function loginError(error) {
 export function checkAuth() {
   return dispatch => {
     return axios.get(`${HOST}/verify`).then ( (res) => {
-      if (res.status === 201) {
 
-          const user = res.data;
+        const user = res.data;
 
-          // Dispatch the success action with user data from server
-          dispatch(receiveLogin(user));
+        // Dispatch the success action with user data from server
+        dispatch(receiveLogin(user));
 
-          dispatch(retrieveAllImages());
+        dispatch(retrieveAllImages());
 
-          browserHistory.push('/dashboard');
-        }
+        browserHistory.push('/dashboard');
+
     }).catch(err => { 
       console.log('You are not authenticated', err.response.data);
       dispatch(loginError(err.response.data));
