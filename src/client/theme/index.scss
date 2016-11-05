@@ -18,6 +18,17 @@ body {
 	.errorsBox {
 		color: #E71A3A;
 	}
+	img {
+		width: 20vw;
+	}
+}
+
+.viewAllContainer {
+	.gridWrapper {
+		width: 90vw;
+		border: 1px solid blue;
+		margin: auto;
+	}
 }
 
 .aboutWrapper {

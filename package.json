@@ -82,7 +82,7 @@
     "passport": "^0.3.2",
     "passport-twitter": "^1.0.4",
     "react-grid-gallery": "^0.2.7",
-    "react-image-grid": "^0.3.1",
+    "react-image-layout": "^1.0.0",
     "uuid-v4": "^0.1.0",
     "validator": "^6.1.0"
   }

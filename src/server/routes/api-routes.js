@@ -19,9 +19,15 @@ app.post('/api/add-image', (req, res) => {
 			res.status(401).send('Please login first!');
 		} else {
 			let image = new Image({
-				id: uuid(),
-				src: img,
-				author: user
+				id: img.id,
+				src: img.src,
+				url: img.src,
+				thumbnail: img.thumbnail,
+				author: img.author,
+				width: img.width,
+				height: img.height,
+				thumbnailWidth: img.thumbnailWidth,
+				thumbnailHeight: img.thumbnailHeight
 			});
 			image.save( (err, image) => {
 				if (err) throw err;

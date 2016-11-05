@@ -15,6 +15,7 @@ export function addImage(data) {
 };
 
 export const SAVE_IMAGES = 'SAVE_IMAGES'
+export const REMOVE_IMAGE = 'REMOVE_IMAGE'
 
 function saveImages(images) {
 	return {
@@ -22,6 +23,13 @@ function saveImages(images) {
 		images
 	}
 };
+
+function removeImageLocal(idx) {
+	return {
+		type: REMOVE_IMAGE,
+		idx
+	}
+}
 
 export function removeImage(data) {
 	return dispatch => {

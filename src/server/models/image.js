@@ -6,7 +6,13 @@ var Schema = mongoose.Schema;
 var Image = new Schema({
 		id: String,
 		src: String,
-		author: String
+		url: String,
+		thumbnail: String,
+		author: String,
+		width: Number,
+		height: Number,
+		thumbnailWidth: Number, 
+		thumbnailHeight: Number
 });
 
 module.exports = mongoose.model('Image', Image);

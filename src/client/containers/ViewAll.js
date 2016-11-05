@@ -1,10 +1,8 @@
 import React from 'react'
 import Gallery from 'react-grid-gallery';
 
-
-
 import ImageLayout from 'react-image-layout';
-import ImageGrid from 'react-image-grid'
+
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -26,33 +24,23 @@ class AllImages extends React.Component {
 	}
 	componentWillMount() {
 
-		let grid = [];
+		const { images } = this.props;
 
-			async function setImageData(img) {
-		    let newImg = new Image();
+		let users = {};
+		let usersList = ['Select a User', 'Display All Images'];
+		function createUsersList(array) {
+			return array.filter( (item) => {
+				return users.hasOwnProperty(item.author) ? users[item.author].push(item) : users[item.author] = [item];
+			});
+		};
 
-		    newImg.onload = await function() {
-		    	const gridImage = {
-			       width: newImg.width / 75,
-			       height: newImg.height / 75,
-			       thumbnailWidth: newImg.width / 75,
-			       thumbnailHeight: newImg.height / 75,
-			       thumbnail: img.src,
-			       src: img.src,
-			       id: img.id
-		     	};
-		      grid.push(gridImage);
-		    }
-		    newImg.src = img.src;
-		}
+		createUsersList(images);
+		for (let user in users) { usersList.push(user); }
 
-		let { images } = this.props;
-
-		for (let i = 0; i < images.length; i++) { setImageData(images[i]) }
-		
 		this.setState({
-			images: grid,
-			displayImages: grid,
+			usersList: usersList,
+			images: images,
+			displayImages: images,
 		});
 	}
 	constructor(props) {
@@ -84,12 +72,9 @@ class AllImages extends React.Component {
 		}
 	}
 	render() {
-		const images = this.state.displayImages;
-		// const renderImages = images.map( (image, idx) => {
-		// 	return <img id = {image.id} src = {image.src} onError = {this.handleImageSrcError} />
-		// });
+		const images = this.state.displayImages.slice();
 		return (
-			<div>
+			<div className = 'viewAllContainer'>
 				<div>
 					<h1>Displaying Images from All Useres</h1>
 					<h2>Select a user to see just their images</h2>
@@ -98,33 +83,22 @@ class AllImages extends React.Component {
 					</select>
 				</div>
 
-				<Gallery images = {images}></Gallery>
+				<Gallery images = {images} />
 
 			</div>
 		);
 	}
-	componentDidMount() {
-		const { images } = this.state;
-		// users object holds keys for each user and their images which is
-		// stored in local state when the component is first mounted
-		let users = {};
-		let usersList = ['Select a User', 'Display All Images'];
-		function createUsersList(array) {
-			return array.filter( (item) => {
-				return users.hasOwnProperty(item.author) ? users[item.author].push(item) : users[item.author] = [item];
-			});
-		};
-		createUsersList(images);
-		for (let user in users) { usersList.push(user); }
+	componentWillUnmount() {
+		console.log('unmounting');
 		this.setState({
-			usersList: usersList
+			images: [],
+			displayImages: [],
+			usersList: []
 		});
 	}
 };
 
 export default AllImages;
-
-
 
 
 

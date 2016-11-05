@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import uuid from 'uuid-v4'
 
-import { addImage, removeImage } from '../actions/images'
+import { retrieveAllImages, addImage, removeImage } from '../actions/images'
 import { logoutUser } from '../actions/logout'
 
 @connect(
@@ -14,6 +15,7 @@ import { logoutUser } from '../actions/logout'
 	dispatch => ({
 		dispatchSubmission: bindActionCreators(addImage, dispatch),
 		dispatchRemove: bindActionCreators(removeImage, dispatch),
+		loadImages: bindActionCreators(retrieveAllImages, dispatch),
 		logoutUser: bindActionCreators(logoutUser, dispatch)
 	})
 )
@@ -22,11 +24,13 @@ class Dashboard extends React.Component {
 		images: React.PropTypes.array.isRequired,
 		user: React.PropTypes.string.isRequired,
 		token: React.PropTypes.string.isRequired,
+		loadImages: React.PropTypes.func.isRequired,
 		dispatchSubmission: React.PropTypes.func.isRequired,
 		dispatchRemove: React.PropTypes.func.isRequired
 	}
 	componentWillMount() {
 		if (!this.props.token) { this.props.logoutUser() }
+		this.props.loadImages();
 	}
 	constructor() {
 		super()
@@ -45,24 +49,52 @@ class Dashboard extends React.Component {
 		const image = this.state.input;
 
 		if (image !== '') {
-			const data = {
-				img: image,
-				user: this.props.user,
-				token: this.props.token
+
+			this.setState({ input: '' });
+
+			function getImageData(source, user, token, cb) {
+				let newImg = new Image();
+
+				newImg.onload = function() {
+		    	const imageData = {
+			       id: uuid(),
+			       author: user,
+			       width: newImg.width / 75,
+			       height: newImg.height / 75,
+			       thumbnailWidth: newImg.width / 75,
+			       thumbnailHeight: newImg.height / 75,
+			       thumbnail: source,
+			       src: source,
+			       url: source
+		     	};
+
+					const data = {
+						img: imageData,
+						user: user,
+						token: token
+					}
+					console.log(data)
+					cb(data)
+
+				}
+				newImg.onerror = () => {
+					console.log('error');
+				}
+
+				newImg.src = source;
+
 			}
-			this.props.dispatchSubmission(data);
-			
-			this.setState({
-				input: ''
-			});
+
+			getImageData(image, this.props.user, this.props.token, this.props.dispatchSubmission);
 
 		}
 
 	}
-	removeImage(id) {
+	removeImage(id, idx) {
 		const data = {
 			token: this.props.token,
-			imageID: id
+			imageID: id,
+			idx
 		}
 		this.props.dispatchRemove(data);
 	}
@@ -72,8 +104,8 @@ class Dashboard extends React.Component {
 		const myImages = images.filter( (image) => {
 			return image.author === user
 		});
-		const renderImages = myImages.map( (image) => {
-			return <img src = {image.src} onError = {this.handleImageSrcError} key = {image.id} onClick = {this.removeImage.bind(this, image.id)}/>
+		const renderImages = myImages.map( (image, idx) => {
+			return <img src = {image.src} onError = {this.handleImageSrcError} key = {image.id} onClick = {this.removeImage.bind(this, image.id, idx)}/>
 		});
 		return (
 			<div className = 'dashboardComponent'>
@@ -84,7 +116,7 @@ class Dashboard extends React.Component {
 					value = {this.state.input}
 					onChange = {this.handleChange} />
 				<button onClick = {this.submitImage}>Submit Image</button>
-				<h1>Your Images:</h1>
+				<h1>Your Images (click to remove)</h1>
 				{renderImages}
 			</div>
 		);
