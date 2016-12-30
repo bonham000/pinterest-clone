@@ -20,34 +20,20 @@ class About extends React.Component {
  		return (
 		  <div className = 'aboutWrapper'>
 
-		    <h1>Welcome to the Free Code Camp Pinterest Clone</h1>
+		    <h1>Welcome to <b>Pictur</b></h1>
 
-		    {
-
-		    	!this.props.isAuthenticated
-
-		    	&&
-
+		    { !this.props.isAuthenticated &&
 		    	<div>
 		    		<h3>Please login to add new images.</h3>
-		    	</div>
+		    	</div> }
 
-		    }
-
-				{
-
-					this.props.isAuthenticated
-
-					&&
-
+				{ this.props.isAuthenticated &&
 					<div>
 						<h2>Welcome {this.props.user}</h2>
-						<p>This is a Pinterst Clone App that  lets you link to images and view images from your friends.</p>
+						<p>This is app lets you link to images and view images from other users.</p>
 						<h3 className = 'credits'><a target = "_blank" href = "https://github.com/bonham000/pinterest-clone">View the source on GitHub</a></h3>
-						<h3 className = 'credits'>This app was created with React and Redux and is a <a target = "_blank" href = "https://www.freecodecamp.com/challenges/build-a-pinterest-clone">project for Free Code Camp</a>.</h3>
-					</div>
-
-				}
+						<h3 className = 'credits'>This is a full stack JavaScript app built with React and Redux.</h3>
+					</div> }
 
 		  </div>
 	  );

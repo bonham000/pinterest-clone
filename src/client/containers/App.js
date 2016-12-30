@@ -28,11 +28,8 @@ class App extends Component {
     const { isAuthenticated, logoutUser } = this.props;
     return (
       <div>
-
         <Navbar isAuthenticated = {isAuthenticated} logoutUser = {logoutUser} />
-
         {this.props.children}
-
       </div>
     );
   }
