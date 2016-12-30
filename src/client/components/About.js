@@ -24,16 +24,11 @@ class About extends React.Component {
 
 		    { !this.props.isAuthenticated &&
 		    	<div>
-		    		<h3>Please login to add new images.</h3>
+		    		<p className='about-title'>This full stack JavaScript app lets you link to images and view images from other users. Please login to add new images.</p>
+						<a className='source' target = "_blank" href = "https://github.com/bonham000/pinterest-clone">View the source on GitHub</a>
 		    	</div> }
 
-				{ this.props.isAuthenticated &&
-					<div>
-						<h2>Welcome {this.props.user}</h2>
-						<p>This is app lets you link to images and view images from other users.</p>
-						<h3 className = 'credits'><a target = "_blank" href = "https://github.com/bonham000/pinterest-clone">View the source on GitHub</a></h3>
-						<h3 className = 'credits'>This is a full stack JavaScript app built with React and Redux.</h3>
-					</div> }
+				{ this.props.isAuthenticated && <div><h2>Welcome {this.props.user}</h2></div> }
 
 		  </div>
 	  );

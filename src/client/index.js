@@ -13,8 +13,6 @@ import './theme/index.scss'
 
 export const store = configureStore();
 
-//console.log(store.getState());
-
 render(
   <Provider store={store}>
     <Router history={browserHistory} routes={routes} />

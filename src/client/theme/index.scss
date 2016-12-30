@@ -33,6 +33,9 @@ body {
 
 .aboutWrapper {
 	text-align: center;
+	.about-title {
+		margin-top: 15px;
+	}
 	h1 {
 		font-size: 36px;
 		width: 65vw;
@@ -45,11 +48,12 @@ body {
 		margin: 25px auto;
 	}
 	p {
-		width: 50vw;
+		width: 55vw;
 		margin: auto;
+		margin-bottom: 10px;
 		font-size: 26px;
 	}
-	h3 {
+	.source {
 		width: 65vw;
 		font-size: 28px;
 		margin-left: auto;
@@ -167,7 +171,7 @@ body {
 			font-size: 32px;
 			width: 70vw;
 		}
-		h3 {
+		.source {
 			font-size: 28px;
 			width: 70vw;
 		}
@@ -175,7 +179,7 @@ body {
 			font-size: 22px;
 			width: 75vw;
 		}
-		.credits {
+		.source {
 			width: 75vw;
 		}
 	}
@@ -264,7 +268,7 @@ body {
 			font-size: 22px;
 			width: 80vw;
 		}
-		h3 {
+		.source {
 			font-size: 20px;
 			width: 90vw;
 		}
@@ -272,7 +276,7 @@ body {
 			font-size: 16px;
 			width: 85vw;
 		}
-		.credits {
+		.source {
 			width: 85vw;
 		}
 	}
